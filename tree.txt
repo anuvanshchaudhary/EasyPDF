@@ -1,0 +1,89 @@
+C:\Users\anuva\vs\my-app
+├── actions
+|  └── upload-actions.ts
+├── app
+|  ├── (logged-in)
+|  |  └── upload
+|  ├── api
+|  |  └── uploadthing
+|  ├── clerk-provider.tsx
+|  ├── favicon.ico
+|  ├── globals.css
+|  ├── layout.tsx
+|  ├── page.tsx
+|  ├── sign-in
+|  |  └── [[...sign-in]]
+|  ├── sign-up
+|  |  └── [[...sign-up]]
+|  └── summaries
+|     └── [id]
+├── components
+|  ├── common
+|  |  ├── bg-gradient.tsx
+|  |  ├── footer.tsx
+|  |  ├── header.tsx
+|  |  └── nav-link.tsx
+|  ├── home
+|  |  ├── cta.tsx
+|  |  ├── demo.tsx
+|  |  ├── hero.tsx
+|  |  ├── pricing.tsx
+|  |  └── working.tsx
+|  ├── summaries
+|  |  ├── content-section.tsx
+|  |  ├── delete-button.tsx
+|  |  ├── download-summary-button.tsx
+|  |  ├── empty-summary-state.tsx
+|  |  ├── navigation-controls.tsx
+|  |  ├── page.tsx
+|  |  ├── progress-bar.tsx
+|  |  ├── source-info.tsx
+|  |  ├── summary-card.tsx
+|  |  ├── summary-header.tsx
+|  |  └── summary-viewer.tsx
+|  ├── ui
+|  |  ├── badge.tsx
+|  |  ├── button.tsx
+|  |  ├── card.tsx
+|  |  ├── input.tsx
+|  |  └── sonner.tsx
+|  └── upload
+|     ├── upload-form-input.tsx
+|     ├── upload-form.tsx
+|     └── upload-header.tsx
+├── components.json
+├── Details.txt.txt
+├── eslint.config.mjs
+├── lib
+|  ├── gemini.ts
+|  ├── langchain.ts
+|  ├── neondb.ts
+|  ├── openai.ts
+|  ├── summaries.ts
+|  └── utils.ts
+├── middleware.ts
+├── next-env.d.ts
+├── next.config.ts
+├── package-lock.json
+├── package.json
+├── postcss.config.mjs
+├── public
+|  ├── file.svg
+|  ├── globe.svg
+|  ├── next.svg
+|  ├── vercel.svg
+|  └── window.svg
+├── README.md
+├── schema.sql
+├── tsconfig.json
+└── utils
+   ├── constants.ts
+   ├── format-utils.ts
+   ├── helpers.ts
+   ├── prompts.ts
+   ├── summary-helper.ts
+   └── uploadthing.ts
+
+directory: 1223 file: 2790
+
+ignored: directory (17)

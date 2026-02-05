@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
-import { Outfit as FontSans, Outfit } from "next/font/google";
+import { Source_Sans_3 as FontSans } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/common/header";
+import Footer from "@/components/common/footer";
+import ClerkClientProvider from "./clerk-provider";
 
-const fontSans = Outfit({
-  variable: "--font-outfit",
+
+const fontSans = FontSans({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -19,12 +23,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <ClerkClientProvider>
     <html lang="en">
       <body
         className={`${fontSans.variable} font-sans antialiased`}
       >
-      {children}
+      <div className="relative flex min-h-screen flex-col">
+      <Header />
+      <main className="flex-1">{children}</main>
+      <Footer />
+      </div>
     </body>
   </html>
+  </ClerkClientProvider>
   );
 }

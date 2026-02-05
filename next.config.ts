@@ -1,7 +1,12 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  transpilePackages: ['@clerk/clerk-react'],
+  turbopack: {
+    resolveAlias: {
+      'swr': 'swr/dist/core/index.mjs',
+    },
+  },
 };
 
 export default nextConfig;
