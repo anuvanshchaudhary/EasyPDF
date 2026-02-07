@@ -1,5 +1,5 @@
 "use client";
-import { Trash2 } from "lucide-react";
+import { X } from "lucide-react";
 import { Button } from "../ui/button";
 import {
   Dialog,
@@ -41,35 +41,32 @@ export default function DeleteButton({ summaryId }: DeleteButtonProps) {
         <Button
           variant={"ghost"}
           size="icon"
-          className="text-gray-400 
-      hover:text-rose-600 hover:bg-rose-500"
+          className="bg-white text-black border-2 border-black hover:bg-black hover:text-white rounded-none h-8 w-8 transition-all"
         >
-          <Trash2 className="w-4 h-4" />
+          <X className="w-5 h-5 font-bold" strokeWidth={3} />
         </Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="border-4 border-black bg-white rounded-none shadow-hard p-6 max-w-sm">
         <DialogHeader>
-          <DialogTitle>Delete Summary</DialogTitle>
-          <DialogDescription>
-            Are you sure you want to delete this Summary? This action cannot be
-            undone.
+          <DialogTitle className="font-serif font-black text-2xl uppercase">CONFIRM_DELETION</DialogTitle>
+          <DialogDescription className="font-mono text-black opacity-70 text-lg">
+            This action is irreversible. The data will be purged.
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
+        <DialogFooter className="mt-4 gap-2 sm:gap-0">
           <Button
             variant="ghost"
-            className="px-2 bg-gray-50 border border-gray-200
-            hover:text-gray-600 hover:bg-gray-100"
+            className="rounded-none border-2 border-black text-black hover:bg-black hover:text-white font-mono font-bold uppercase"
             onClick={() => setOpen(false)}
           >
-            Cancel
+            ABORT
           </Button>
           <Button
             variant="destructive"
-            className="bg-gray-900 hover:bg-gray-600"
+            className="rounded-none bg-black text-white border-2 border-black hover:bg-white hover:text-black font-mono font-bold uppercase"
             onClick={handleDelete}
           >
-            {isPending ? "Deleting..." : "Delete"}
+            {isPending ? "PURGING..." : "EXECUTE"}
           </Button>
         </DialogFooter>
       </DialogContent>

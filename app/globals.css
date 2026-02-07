@@ -1,211 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Fraunces:opsz,wght@9..144,300;400;700;900&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 @theme inline {
   /* Fonts */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
-  --font-mono: var(--font-geist-mono);
+  --font-mono: "VT323", monospace;
+  --font-serif: "Fraunces", "Times New Roman", serif;
+  --font-sans: "Fraunces", "Times New Roman", serif;
+  /* Default to serif for this theme if sans is used */
 
-  /* Core colors */
+  /* Colors: Strict Black & White */
+  --color-black: #000000;
+  --color-white: #FFFFFF;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
 
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
+  /* Border Widths */
+  --border-width-3: 3px;
+  --border-width-4: 4px;
+  --border-width-5: 5px;
 
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  /* Shadows */
+  --shadow-hard: 6px 6px 0px 0px #000000;
+  --shadow-hard-sm: 3px 3px 0px 0px #000000;
+  --shadow-reverse: -4px 4px 0px 0px #000000;
 
-  /* Charts */
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-
-  /* Sidebar */
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-
-  /* Radius */
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  /* Background Patterns */
+  --background-image-halftone: radial-gradient(#000 1px, transparent 1px);
+  --background-size-halftone: 4px 4px;
 }
 
-/* Light theme */
+/* Base Theme Variables */
 :root {
-  --radius: 0.625rem;
+  --background: #FFFFFF;
+  --foreground: #000000;
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-
-  --destructive: oklch(0.577 0.245 27.325);
-
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Clerk / Component overrides to match strict theme */
+  --card: #FFFFFF;
+  --card-foreground: #000000;
+  --popover: #FFFFFF;
+  --popover-foreground: #000000;
+  --primary: #000000;
+  --primary-foreground: #FFFFFF;
+  --secondary: #FFFFFF;
+  --secondary-foreground: #000000;
+  --muted: #FFFFFF;
+  --muted-foreground: #000000;
+  --accent: #000000;
+  --accent-foreground: #FFFFFF;
+  --destructive: #000000;
+  --destructive-foreground: #FFFFFF;
+  --border: #000000;
+  --input: #FFFFFF;
+  --ring: #000000;
+  --radius: 0px;
+  /* No rounded corners */
 }
 
-/* Dark theme */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-
-  --destructive: oklch(0.704 0.191 22.216);
-
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Enforcing the same black/white theme even in dark mode for this specific 'print' aesthetic, 
+     or we could invert it. The prompt says "Strictly #000000 and #FFFFFF". 
+     Let's keep it consistent or simple invert if needed, but 'Punk Zine' usually implies white paper, black ink.
+     For now, mapping dark mode to the same or inverted. Let's invert for usability if system is dark. */
+  --background: #000000;
+  --foreground: #FFFFFF;
+  --card: #000000;
+  --card-foreground: #FFFFFF;
+  --primary: #FFFFFF;
+  --primary-foreground: #000000;
+  --border: #FFFFFF;
+  --ring: #FFFFFF;
 }
 
-/* Base styles */
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-mono;
+    /* Force no anti-aliasing for crisp pixel look */
+    -webkit-font-smoothing: none;
   }
 
-  h1 {
-    @apply text-4xl md:text-6xl xl:text-7xl font-bold;
+  /* Custom Selection Style */
+  ::selection {
+    @apply bg-black text-white;
   }
 
-  h2 {
-    @apply text-xl lg:text-3xl font-medium;
-  }
-
-  h3 {
-    @apply text-2xl lg:text-4xl font-medium;
-  }
-
-  a,
-  button {
-    @apply cursor-pointer;
-  }
-
-  button:not([data-slot="button"]) {
-    @apply bg-rose-600 hover:bg-rose-900 text-white;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif font-black;
   }
 }
 
-/* Container utility */
-@utility container {
-  margin-inline: auto;
-  padding-inline: 2rem;
-
-  @media (width >= --theme(--breakpoint-sm)) {
-    max-width: none;
-  }
-
-  @media (width >= 1400px) {
-    max-width: 1400px;
-  }
+@utility dither-img {
+  filter: contrast(150%) grayscale(100%);
+  image-rendering: pixelated;
 }
 
-/* Gradient animation */
-@keyframes gradient-x {
-  0%,
-  100% {
-    background-size: 200% 100%;
-    background-position: left center;
-  }
-  50% {
-    background-size: 200% 100%;
-    background-position: right center;
-  }
-}
-
-.animate-gradient-x {
-  animation: gradient-x 3s ease infinite;
+@utility bg-halftone {
+  background-image: radial-gradient(var(--foreground) 1px, transparent 1px);
+  background-size: 4px 4px;
+  /* Make sure it's visible on white */
+  opacity: 0.2;
 }

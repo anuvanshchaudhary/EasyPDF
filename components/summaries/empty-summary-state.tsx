@@ -1,28 +1,30 @@
 import { FileText } from "lucide-react";
 import Link from "next/link";
-import { Button } from "../ui/button";
 
 export default function EmptySummaryState() {
   return (
-    <div className="text-center py-12">
-      <div className="flex flex-col items-center gap-4">
-        <FileText className="w-16 h-16 text-gray-400" />
-        <h2 className="text-xl font-semibold text-gray-600">
-          No Summaries yet
-        </h2>
-        <p className="text-gray-500 max-w-md">
-          Upload your firs PDF to get started with AI-Powered Summaries.
-        </p>
-        <Link href="/upload">
-          <Button
-            variant={"link"}
-            className="mt-4 text-white bg-linear-to-r
-                    from-rose-500 to-rose-700 hover:from-rose-600
-                    hover:to-rose-800 hover:no-underline"
-          >
-            Create Your First Summary
-          </Button>
-        </Link>
+    <div className="flex justify-center py-12">
+      <div className="bg-white border-4 border-black p-8 shadow-hard max-w-lg mx-auto rotate-1 text-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="bg-black text-white p-4">
+            <FileText className="w-16 h-16" strokeWidth={1.5} />
+          </div>
+
+          <h2 className="font-serif font-black text-4xl uppercase mt-4">
+            NO_DATA_FOUND
+          </h2>
+
+          <p className="font-mono text-xl mb-6">
+            The archives are empty. <br />
+            Initialize extraction sequence.
+          </p>
+
+          <Link href="/upload">
+            <button className="bg-black text-white px-8 py-3 text-2xl font-bold uppercase hover:bg-white hover:text-black border-4 border-transparent hover:border-black transition-all shadow-hard hover:shadow-none cursor-pointer">
+              INITIATE_UPLOAD
+            </button>
+          </Link>
+        </div>
       </div>
     </div>
   );

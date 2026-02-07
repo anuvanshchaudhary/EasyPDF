@@ -1,12 +1,9 @@
-import BgGradient from "@/components/common/bg-gradient";
 import EmptySummaryState from "@/components/summaries/empty-summary-state";
 import SummaryCard from "@/components/summaries/summary-card";
 
-import { Button } from "@/components/ui/button";
 import { getSummaries } from "@/lib/summaries";
 import { currentUser } from "@clerk/nextjs/server";
-import { Description } from "@radix-ui/react-dialog";
-import { ArrowRight, Plus } from "lucide-react";
+import { Plus, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
@@ -18,84 +15,59 @@ export default async function DashboardPage() {
     }
 
     const uploadLimit = 5;
-    // const summaries = [
-    //   {
-    //     id: 1,
-    //     title: "IMAGE RESTORATION",
-    //     summary_text: "Deep Learning project report",
-    //     created_at: "2025-04-15 00:12:51.553372+00",
-    //     status: 'completed',
-    //   },
-    // ];
     const summaries = await getSummaries(userId);
+
+    // Creating slight random rotations for the scrapbook feel
+    const rotations = ['rotate-1', '-rotate-2', 'rotate-2', '-rotate-1'];
+
     return (
-        <main className="min-h-screen">
-            <BgGradient
-                className="from-emerald-200 
-      via-teal-200 to-cyan-200"
-            />
-            <div className="container mx-auto flex flex-col gap-4">
-                <div className="px-2 py-12 sm:py-24">
-                    <div className="flex gap-4 mb-8 justify-between">
-                        <div className="flex flex-col gap-2">
-                            <h1
-                                className="text-4xl font-bold
-              tracking-tight bg-linear-to-r 
-              from-gray-600 to-gray-950 bg-clip-text
-              text-transparent"
-                            >
-                                Your Summaries
-                            </h1>
-                            <p className="text-gray-600">
-                                Transform your PDFs into concise, actionable insights
-                            </p>
-                        </div>
-                        <Button
-                            variant={"link"}
-                            className="bg-linear-to-r from-rose-500
-                to-rose-700 hover:from-rose-600 hover:to-rose-800
-                hover:scale-105 transition-all duration-300 group 
-                hover:no-underline"
-                        >
-                            <Link
-                                href="/upload"
-                                className="flex 
-              items-center text-white"
-                            >
-                                <Plus className="w-5 h-5 mr-2" />
-                                New Summary
-                            </Link>
-                        </Button>
+        <main className="min-h-screen bg-white relative overflow-hidden font-mono p-8 md:p-16">
+            <div className="absolute inset-0 bg-halftone pointer-events-none z-0"></div>
+
+            <div className="relative z-10">
+                <header className="mb-16 border-b-4 border-black pb-4 bg-white inline-block pr-12 shadow-hard">
+                    <h1 className="text-6xl font-black uppercase font-serif">Archive_Index</h1>
+                </header>
+
+                <div className="flex justify-between items-center mb-8">
+                    <div className="text-xl font-bold bg-white p-2 border-2 border-black inline-block">
+                        Total_Docs: {summaries.length}
                     </div>
+                    <Link href="/upload">
+                        <button className="bg-black text-white px-6 py-2 text-xl hover:bg-white hover:text-black border-2 border-black transition-all shadow-hard hover:shadow-none flex items-center gap-2">
+                            <Plus className="w-5 h-5" /> NEW_ENTRY
+                        </button>
+                    </Link>
+                </div>
+
+                <div className="container mx-auto">
                     <div className="mb-6">
-                        <div
-                            className="bg-rose-50 border border-rose-200
-            rounded-lg p-4 text-rose-800"
-                        >
-                            <p className="text-sm">
-                                You've reached the limit of {uploadLimit} uploads on the Basic
-                                plan.{" "}
+                        {/* Limit warning can be styled as a sticky note or alert */}
+                        <div className="bg-white border-4 border-black p-4 shadow-hard-sm relative rotate-1 max-w-lg mx-auto mb-12">
+                            <div className="absolute -top-3 -left-3 bg-black text-white px-2 font-bold">WARNING</div>
+                            <p className="text-lg font-bold">
+                                SYSTEM LIMIT: {uploadLimit} UPLOADS (BASIC TIER)
+                                <br />
                                 <Link
                                     href="/#pricing"
-                                    className="text-rose-800 underline font-medium
-                        underline-offset-4 inline-flex items-center"
+                                    className="underline decoration-2 hover:bg-black hover:text-white inline-flex items-center mt-2 group"
                                 >
-                                    Click here to upgrade to Pro{" "}
-                                    <ArrowRight className="w-4 h-4 inline-block" />
-                                </Link>{" "}
-                                for unlimited uploads.
+                                    UPGRADE_ACCESS <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                                </Link>
                             </p>
                         </div>
                     </div>
+
                     {summaries.length === 0 ? (
-                        <EmptySummaryState />
+                        <EmptySummaryState /> // This might need restyling too, but assuming it fits or is simple
                     ) : (
-                        <div
-                            className="grid grid-cols-1 gap-4 sm:gap-6
-          md-grid-cols-2 lg:grid-cols-3 sm_px-0"
-                        >
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 pb-20">
                             {summaries.map((summary, idx) => (
-                                <SummaryCard key={idx} summary={summary} />
+                                <SummaryCard
+                                    key={idx}
+                                    summary={summary}
+                                    className={rotations[idx % 4]}
+                                />
                             ))}
                         </div>
                     )}
