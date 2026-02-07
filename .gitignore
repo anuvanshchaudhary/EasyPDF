@@ -42,3 +42,12 @@ next-env.d.ts
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+# Editor directories and files
+.vscode/
+*.txt
+tree.txt
+
+# Ensure system files are ignored
+.DS_Store
+Thumbs.db
