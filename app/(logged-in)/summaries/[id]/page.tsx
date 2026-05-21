@@ -1,6 +1,7 @@
 import { SummaryViewer } from "@/components/summaries/summary-viewer";
 import { getSummaryById } from "@/lib/summaries";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 export default async function SummaryPage(props: {
     params: Promise<{ id: string }>;
@@ -21,10 +22,20 @@ export default async function SummaryPage(props: {
     } = summary;
 
     return (
-        <div className="min-h-screen bg-white p-4 md:p-12 flex justify-center selection:bg-black selection:text-white">
+        <div className="min-h-screen bg-white p-4 md:p-12 flex flex-col items-center justify-center selection:bg-black selection:text-white">
+
+            {/* BACK TO DASHBOARD ACTION */}
+            <div className="w-full max-w-4xl mb-6 flex justify-start">
+                <Link href="/dashboard">
+                    <button className="bg-black text-white px-6 py-2 font-mono font-bold text-lg hover:bg-white hover:text-black border-2 border-black transition-all shadow-hard hover:shadow-none flex items-center gap-2 cursor-pointer">
+                        ◄ BACK_TO_DASHBOARD
+                    </button>
+                </Link>
+            </div>
 
             {/* PAPER CONTAINER */}
             <div className="w-full max-w-4xl bg-white border-l-4 border-r-4 border-black p-8 md:p-16 shadow-hard relative min-h-[80vh]">
+
 
                 {/* Double Border Header */}
                 <header className="border-b-4 border-black mb-12 pb-8 text-center">

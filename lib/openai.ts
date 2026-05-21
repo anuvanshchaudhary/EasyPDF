@@ -5,34 +5,26 @@ const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-export async function generateSummaryFromOpenAI(pdfText: string) {
+export async function generateSummaryFromOpenAI(pdfText: string, targetWords?: number) {
     try {
+        const wordLimitInstruction = targetWords
+            ? `\nYour response MUST be between ${targetWords} and ${targetWords + 100} words total.`
+            : '';
+
         const completion = await openai.chat.completions.create({
             model: "gpt-4o",
             messages: [
                 {
                     role: "system",
-                    // We append strict formatting rules to whatever system prompt you already have
-                    content: `${SUMMARY_SYSTEM_PROMPT} 
-                    
-                    CRITICAL OUTPUT RULES:
-                    1. You are generating content for a Flashcard/Slide App.
-                    2. You MUST separate every single slide with exactly this separator: "---"
-                    3. Do not number the slides.
-                    4. Start every slide with a "## Title".
-                    5. Produce at least 5-7 distinct slides.
-                    `
+                    content: `${SUMMARY_SYSTEM_PROMPT}${wordLimitInstruction}`,
                 },
                 {
                     role: "user",
-                    content: `Here is the document text. Please summarize it into 5-7 distinct slides/flashcards using the "---" separator strictly.
-                    
-                    Text to summarize:
-                    ${pdfText.slice(0, 50000)}`
+                    content: `Please create a comprehensive summary of the following document:\n\n${pdfText.slice(0, 50000)}`,
                 },
             ],
-            temperature: 0.7,
-            max_tokens: 2000, // Increased to allow for multiple slides
+            temperature: 0.3,
+            max_tokens: 1500,
         });
 
         const summary = completion.choices[0].message.content;
@@ -48,4 +40,4 @@ export async function generateSummaryFromOpenAI(pdfText: string) {
         }
         throw error;
     }
-}
+}

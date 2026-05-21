@@ -4,7 +4,8 @@ import { currentUser } from "@clerk/nextjs/server";
 import { RecursiveCharacterTextSplitter } from "@langchain/textsplitters";
 import { PDFLoader } from "@langchain/community/document_loaders/fs/pdf";
 import { generateSummaryFromGemini } from "@/lib/gemini";
-import { createSummary } from "@/lib/summaries";
+import { generateSummaryFromOpenAI } from "@/lib/openai";
+import { createSummary, getUserSummaryCountLast24h } from "@/lib/summaries";
 import { revalidatePath } from "next/cache";
 
 export async function generatePdfSummary({
@@ -20,6 +21,12 @@ export async function generatePdfSummary({
         const user = await currentUser();
         if (!user) {
             throw new Error("User not authenticated");
+        }
+
+        // Rate limit: max 10 summaries per 24 hours
+        const recentCount = await getUserSummaryCountLast24h(user.id);
+        if (recentCount >= 10) {
+            throw new Error("Daily limit reached. You can generate up to 10 summaries per 24 hours.");
         }
 
         // Step 1: Load PDF from URL
@@ -47,23 +54,70 @@ export async function generatePdfSummary({
         const fullText = docs.map((doc) => doc.pageContent).join("\n\n");
         console.log("📝 Extracted text length:", fullText.length, "characters");
 
-        if (fullText.length < 100) {
-            throw new Error("PDF contains insufficient text content");
+        if (fullText.trim().length < 200) {
+            throw new Error(
+                "Could not extract text — this may be a scanned or image-based PDF. Please use a text-based PDF."
+            );
         }
 
-        // Step 4: Split text if it's too long (optional, for very large PDFs)
+        // Step 4: Real chunking — 8000 chars with 500 overlap
         const textSplitter = new RecursiveCharacterTextSplitter({
-            chunkSize: 100000, // Process up to 100k characters
-            chunkOverlap: 2000,
+            chunkSize: 8000,
+            chunkOverlap: 500,
         });
 
         const chunks = await textSplitter.createDocuments([fullText]);
-        const processedText = chunks[0].pageContent;
+        console.log(`📦 Split into ${chunks.length} chunk(s)`);
+
+        // Dynamic word limit: scale with input size (min 200, max 2000)
+        const inputWords = fullText.split(/\s+/).length;
+        const targetWords = Math.min(2000, Math.max(500, Math.floor(inputWords / 3)));
+        console.log(`🎯 Target words: ${targetWords} (from ${inputWords} input words)`);
 
         console.log("✨ Generating AI summary...");
 
-        // Step 5: Generate summary using Gemini
-        const summary = await generateSummaryFromGemini(processedText);
+        let processedText: string;
+
+        if (chunks.length === 1) {
+            // Single chunk — process directly
+            processedText = chunks[0].pageContent;
+        } else {
+            // Multiple chunks — hierarchical summarization
+            console.log(`📚 Hierarchical mode: summarizing ${chunks.length} chunks individually...`);
+
+            const MINI_SUMMARY_PROMPT = `Summarize the following section of a document in 2-3 concise bullet points (•). Be factual and specific.`;
+
+            const miniSummaries: string[] = [];
+
+            for (let i = 0; i < chunks.length; i++) {
+                console.log(`  ↳ Processing chunk ${i + 1}/${chunks.length}...`);
+                const miniPrompt = `${MINI_SUMMARY_PROMPT}\n\n${chunks[i].pageContent}`;
+                try {
+                    const mini = await generateSummaryFromGemini(miniPrompt);
+                    miniSummaries.push(`### Section ${i + 1}\n${mini}`);
+                } catch {
+                    // If a mini-chunk fails, skip it rather than aborting the whole job
+                    console.warn(`  ⚠️ Chunk ${i + 1} failed, skipping.`);
+                }
+            }
+
+            // The combined mini-summaries become the "document" for the final pass
+            processedText = miniSummaries.join("\n\n");
+            console.log(`✅ Chunk summaries combined (${processedText.length} chars) — running final pass...`);
+        }
+
+        // Step 5: Generate final summary — Gemini primary, OpenAI fallback
+        let summary: string;
+        try {
+            summary = await generateSummaryFromGemini(processedText, targetWords);
+        } catch (geminiError: any) {
+            if (geminiError.message === 'GEMINI_FAILED') {
+                console.warn('⚠️ Gemini failed after retries. Falling back to OpenAI...');
+                summary = await generateSummaryFromOpenAI(processedText, targetWords);
+            } else {
+                throw geminiError;
+            }
+        }
 
         if (!summary || summary.length < 200) {
             throw new Error("Generated summary is too short");

@@ -1,7 +1,7 @@
 "use server";
 
 import { getDbConnection } from "@/lib/neondb";
-import { createSummary, deleteSummary } from "@/lib/summaries";
+import { createSummary, deleteSummary, deleteAllSummaries } from "@/lib/summaries";
 import { currentUser } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { generateSummaryFromGemini } from "@/lib/gemini";
@@ -29,6 +29,29 @@ export async function deleteSummaryAction({
         return { success: false };
     } catch (error) {
         console.error("Error Deleting Summary", error);
+        return { success: false };
+    }
+}
+
+export async function deleteAllSummariesAction() {
+    try {
+        const user = await currentUser();
+        const userId = user?.id;
+
+        if (!userId) {
+            throw new Error("User not found");
+        }
+
+        const success = await deleteAllSummaries(userId);
+
+        if (success) {
+            revalidatePath("/dashboard");
+            return { success: true };
+        }
+
+        return { success: false };
+    } catch (error) {
+        console.error("Error Deleting All Summaries", error);
         return { success: false };
     }
 }

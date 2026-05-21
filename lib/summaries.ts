@@ -161,6 +161,54 @@ export async function deleteSummary(id: string, userId: string) {
   }
 }
 
+export async function deleteAllSummaries(userId: string) {
+  try {
+    const sql = await getDbConnection();
+
+    await sql`
+      DELETE FROM pdf_summaries
+      WHERE user_id=${userId}
+    `;
+
+    return true;
+  } catch (err) {
+    console.error("Error deleting all summaries:", err);
+    return false;
+  }
+}
+
+export async function markSummaryFailed(id: string, userId: string): Promise<void> {
+  try {
+    const sql = await getDbConnection();
+
+    await sql`
+      UPDATE pdf_summaries
+      SET status = 'failed', updated_at = NOW()
+      WHERE id=${id} AND user_id=${userId}
+    `;
+  } catch (err) {
+    console.error("Error marking summary as failed:", err);
+  }
+}
+
+export async function getUserSummaryCountLast24h(userId: string): Promise<number> {
+  try {
+    const sql = await getDbConnection();
+
+    const [result] = await sql`
+      SELECT COUNT(*) as count
+      FROM pdf_summaries
+      WHERE user_id=${userId}
+        AND created_at > NOW() - INTERVAL '24 hours'
+    `;
+
+    return Number(result?.count ?? 0);
+  } catch (err) {
+    console.error("Error fetching 24h summary count:", err);
+    return 0;
+  }
+}
+
 // Helper function to extract title from summary markdown
 function extractTitleFromSummary(summary: string): string | null {
   const lines = summary.split('\n');

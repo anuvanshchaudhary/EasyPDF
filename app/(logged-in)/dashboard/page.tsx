@@ -1,5 +1,6 @@
 import EmptySummaryState from "@/components/summaries/empty-summary-state";
 import SummaryCard from "@/components/summaries/summary-card";
+import DeleteAllButton from "@/components/summaries/delete-all-button";
 
 import { getSummaries } from "@/lib/summaries";
 import { currentUser } from "@clerk/nextjs/server";
@@ -33,11 +34,14 @@ export default async function DashboardPage() {
                     <div className="text-xl font-bold bg-white p-2 border-2 border-black inline-block">
                         Total_Docs: {summaries.length}
                     </div>
-                    <Link href="/upload">
-                        <button className="bg-black text-white px-6 py-2 text-xl hover:bg-white hover:text-black border-2 border-black transition-all shadow-hard hover:shadow-none flex items-center gap-2">
-                            <Plus className="w-5 h-5" /> NEW_ENTRY
-                        </button>
-                    </Link>
+                    <div className="flex items-center gap-4 flex-wrap justify-end">
+                        {summaries.length > 0 && <DeleteAllButton />}
+                        <Link href="/upload">
+                            <button className="bg-black text-white px-6 py-2 text-xl hover:bg-white hover:text-black border-2 border-black transition-all shadow-hard hover:shadow-none flex items-center gap-2">
+                                <Plus className="w-5 h-5" /> NEW_ENTRY
+                            </button>
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="container mx-auto">
