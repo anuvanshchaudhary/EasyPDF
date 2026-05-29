@@ -3,7 +3,6 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 import {Badge} from "@/components/ui/badge";
 import Link from 'next/link';
 
-
 export default function HeroSection() {
   return (
     <section
