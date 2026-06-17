@@ -40,7 +40,7 @@ ${pdfText.slice(0, 100000)}`;
                         contents: [{ parts: [{ text: fullPrompt }] }],
                         generationConfig: {
                             temperature: 0.3,
-                            maxOutputTokens: 1500,
+                            maxOutputTokens: 4096,
                             topP: 0.8,
                             topK: 40,
                         },

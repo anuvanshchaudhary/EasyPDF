@@ -1,16 +1,18 @@
-import React from 'react';
-import { ArrowRight, Star } from 'lucide-react';
-import Link from 'next/link';
-import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import React from "react";
+import { ArrowRight, Star } from "lucide-react";
+import Link from "next/link";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const LandingPage = () => {
   return (
     <div className="min-h-screen bg-white font-mono overflow-x-hidden text-black selection:bg-black selection:text-white">
-
       {/* NAVBAR */}
       <nav className="border-b-4 border-black p-4 flex justify-between items-center sticky top-0 bg-white z-50">
         <div className="text-4xl font-black uppercase tracking-tighter">
-          EASY_PDF<span className="text-xs align-top border border-black px-1 ml-1">v2.0</span>
+          EASY_PDF
+          <span className="text-xs align-top border border-black px-1 ml-1">
+            v2.0 /
+          </span>
         </div>
         <div className="flex items-center gap-4">
           <SignedOut>
@@ -27,7 +29,11 @@ const LandingPage = () => {
               </button>
             </Link>
             <div className="border-4 border-black p-1">
-              <UserButton appearance={{ elements: { userButtonAvatarBox: "w-8 h-8 rounded-none" } }} />
+              <UserButton
+                appearance={{
+                  elements: { userButtonAvatarBox: "w-8 h-8 rounded-none" },
+                }}
+              />
             </div>
           </SignedIn>
         </div>
@@ -42,7 +48,10 @@ const LandingPage = () => {
           </h1>
           <p className="text-2xl mb-8 font-bold max-w-md">
             Stop reading PDFs. Start extracting raw intelligence.
-            <span className="bg-black text-white px-1 ml-1">NO FLUFF.</span> just code.
+            <span className="bg-black text-white px-1 ml-1">
+              NO FLUFF.
+            </span>{" "}
+            just code.
           </p>
 
           <Link href="/upload" className="self-start">
@@ -58,7 +67,11 @@ const LandingPage = () => {
           <div className="absolute inset-0 bg-halftone opacity-20 pointer-events-none"></div>
           <div className="text-white text-center p-8 border-4 border-white m-12 rotate-2 z-10 w-fit mx-auto">
             <Star size={64} className="mx-auto mb-4" fill="white" />
-            <h2 className="text-4xl font-bold uppercase">100%<br />AI POWERED</h2>
+            <h2 className="text-4xl font-bold uppercase">
+              100%
+              <br />
+              AI POWERED
+            </h2>
           </div>
         </div>
       </header>
@@ -100,53 +113,90 @@ const LandingPage = () => {
           Select_Clearance_Level:
         </h2>
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-0 border-4 border-black bg-white shadow-hard text-black">
-
           {/* FREE TIER */}
           <div className="p-8 border-b-4 md:border-b-0 md:border-r-4 border-black flex flex-col relative group hover:bg-black hover:text-white transition-colors">
             <h3 className="text-4xl font-bold mb-2">STARTER</h3>
-            <p className="text-xl font-mono mb-6 opacity-70">For casual extraction.</p>
+            <p className="text-xl font-mono mb-6 opacity-70">
+              For casual extraction.
+            </p>
             <p className="text-6xl font-black mb-8">₹0</p>
 
             <ul className="text-lg font-mono mb-8 space-y-2 flex-grow">
-              <li className="flex items-center"><span className="mr-2 font-black">[x]</span> 1 PDF Summary/mo</li>
-              <li className="flex items-center"><span className="mr-2 font-black">[x]</span> Standard Speed</li>
-              <li className="flex items-center opacity-50"><span className="mr-2 font-black">[ ]</span> Email Support</li>
+              <li className="flex items-center">
+                <span className="mr-2 font-black">[x]</span> 1 PDF Summary/mo
+              </li>
+              <li className="flex items-center">
+                <span className="mr-2 font-black">[x]</span> Standard Speed
+              </li>
+              <li className="flex items-center opacity-50">
+                <span className="mr-2 font-black">[ ]</span> Email Support
+              </li>
             </ul>
 
-            <button className="bg-black text-white w-full py-2 text-2xl border-4 border-transparent group-hover:border-white group-hover:bg-white group-hover:text-black cursor-pointer uppercase font-bold">INITIATE</button>
+            <button className="bg-black text-white w-full py-2 text-2xl border-4 border-transparent group-hover:border-white group-hover:bg-white group-hover:text-black cursor-pointer uppercase font-bold">
+              INITIATE
+            </button>
           </div>
 
           {/* BASIC TIER */}
           <div className="p-8 border-b-4 md:border-b-0 md:border-r-4 border-black flex flex-col relative group hover:bg-black hover:text-white transition-colors">
             <h3 className="text-4xl font-bold mb-2">BASIC</h3>
-            <p className="text-xl font-mono mb-6 opacity-70">Daily operations.</p>
+            <p className="text-xl font-mono mb-6 opacity-70">
+              Daily operations.
+            </p>
             <p className="text-6xl font-black mb-8">₹99</p>
 
             <ul className="text-lg font-mono mb-8 space-y-2 flex-grow">
-              <li className="flex items-center"><span className="mr-2 font-black">[x]</span> 5 PDF Summaries/mo</li>
-              <li className="flex items-center"><span className="mr-2 font-black">[x]</span> Standard Speed</li>
-              <li className="flex items-center"><span className="mr-2 font-black">[x]</span> Email Support</li>
+              <li className="flex items-center">
+                <span className="mr-2 font-black">[x]</span> 5 PDF Summaries/mo
+              </li>
+              <li className="flex items-center">
+                <span className="mr-2 font-black">[x]</span> Standard Speed
+              </li>
+              <li className="flex items-center">
+                <span className="mr-2 font-black">[x]</span> Email Support
+              </li>
             </ul>
 
-            <button className="bg-black text-white w-full py-2 text-2xl border-4 border-transparent group-hover:border-white group-hover:bg-white group-hover:text-black cursor-pointer uppercase font-bold">UPGRADE</button>
+            <button className="bg-black text-white w-full py-2 text-2xl border-4 border-transparent group-hover:border-white group-hover:bg-white group-hover:text-black cursor-pointer uppercase font-bold">
+              UPGRADE
+            </button>
           </div>
 
           {/* PREMIUM TIER */}
           <div className="p-8 bg-black text-white flex flex-col relative overflow-hidden ring-inset">
-            <div className="absolute top-6 -right-6 bg-white text-black px-8 py-1 text-sm font-bold border-2 border-white rotate-45 z-10">RECOMMENDED</div>
+            <div className="absolute top-6 -right-6 bg-white text-black px-8 py-1 text-sm font-bold border-2 border-white rotate-45 z-10">
+              RECOMMENDED
+            </div>
 
             <h3 className="text-4xl font-bold mb-2">PREMIUM</h3>
-            <p className="text-xl font-mono mb-6 opacity-80">Full unrestricted access.</p>
+            <p className="text-xl font-mono mb-6 opacity-80">
+              Full unrestricted access.
+            </p>
             <p className="text-6xl font-black mb-8">₹229</p>
 
             <ul className="text-lg font-mono mb-8 space-y-2 flex-grow">
-              <li className="flex items-center"><span className="mr-2 font-black text-white">&gt;&gt;</span> Unlimited PDFs</li>
-              <li className="flex items-center"><span className="mr-2 font-black text-white">&gt;&gt;</span> Priority Processing</li>
-              <li className="flex items-center"><span className="mr-2 font-black text-white">&gt;&gt;</span> 24/7 Priority Support</li>
-              <li className="flex items-center"><span className="mr-2 font-black text-white">&gt;&gt;</span> Markdown Export</li>
+              <li className="flex items-center">
+                <span className="mr-2 font-black text-white">&gt;&gt;</span>{" "}
+                Unlimited PDFs
+              </li>
+              <li className="flex items-center">
+                <span className="mr-2 font-black text-white">&gt;&gt;</span>{" "}
+                Priority Processing
+              </li>
+              <li className="flex items-center">
+                <span className="mr-2 font-black text-white">&gt;&gt;</span>{" "}
+                24/7 Priority Support
+              </li>
+              <li className="flex items-center">
+                <span className="mr-2 font-black text-white">&gt;&gt;</span>{" "}
+                Markdown Export
+              </li>
             </ul>
 
-            <button className="bg-white text-black w-full py-2 text-2xl border-4 border-transparent hover:border-white hover:bg-black hover:text-white cursor-pointer uppercase font-bold transition-all">ACCESS_ALL</button>
+            <button className="bg-white text-black w-full py-2 text-2xl border-4 border-transparent hover:border-white hover:bg-black hover:text-white cursor-pointer uppercase font-bold transition-all">
+              ACCESS_ALL
+            </button>
           </div>
         </div>
       </section>

@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <ClerkClientProvider>
       <html lang="en">
-        <body className="antialiased">
+        <body className="antialiased" suppressHydrationWarning>
           <div className="relative flex min-h-screen flex-col">
             <main className="flex-1">{children}</main>
           </div>
